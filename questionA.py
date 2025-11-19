@@ -68,7 +68,7 @@ A4 = NFA(states = {'q0','q1','q2','q3','q4','q5',
 			  'q03': {'a': {'q01'}, 'b': {'q04'}, 'c': {'q01'}},
 			  'q04': {'a': {'q03'}, 'b': {'q02'}, 'c': {'q05'}},
 			  'q05': {'a': {'q01'}, 'b': {'q06'}, 'c': {'q01'}},
-			  'q06': {'a': {'q02'}, 'b': {'q02'}, 'c': {'q01'}},
+			  'q06': {'a': {'q03'}, 'b': {'q02'}, 'c': {'q01'}},
 
 			  # b[x]abcb
 			  'q1': {'a': {'q11','q2'}, 'b': {'q11'}, 'c': {'q11'}},
@@ -152,7 +152,7 @@ if __name__ == "__main__":
 	rejected = []
 
 	alphabet = ['a', 'b', 'c']
-	WORD_LENGTH = 12
+	WORD_LENGTH = 13
 
 	# 1. EFFICIENT GENERATION
 	# 3^10 is 59,049 combinations. This is fast enough for Python.
@@ -190,7 +190,7 @@ if __name__ == "__main__":
 		else:
 			rejected.append(word)
 			if regex_accepts:
-				#print(f"False Negative: {word}")
+				print(f"False Negative: {word}")
 				false_negative += 1  # NFA said No, Regex said Yes
 			else:
 				true_negative += 1
