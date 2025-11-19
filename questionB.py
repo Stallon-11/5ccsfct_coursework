@@ -1,18 +1,5 @@
 from automata.fa.nfa import NFA
 
-# A_r = NFA(states = {'q0','q1','q2','q3','q4','q5','q6'},
-# 		  initial_state='q0',
-# 		  final_states = {'q2', 'q4', 'q6'},
-# 		  input_symbols={'a','b', 'c'},
-# 		  transitions = {
-# 			  'q0': {'a': {'q5'}, 'b': {'q3'}, 'c': {'q1'}, '': {'q4'}},
-# 			  'q1': {'a': {'q3'}, 'b': {'q2'}, 'c': {'q3'}},
-# 			  'q2': {'a': {'q3'}, 'b': {'q3'}, 'c': {'q3'}},
-# 			  'q3': {'a': {'q3'}, 'b': {'q3'}, 'c': {'q3'}},
-# 			  'q4': {'a': {'q3'}, 'b': {'q3'}, 'c': {'q3'}},
-# 			  'q5': {'a': {'q6'}, 'b': {'q3'}, 'c': {'q3'}},
-# 			  'q6': {'a': {'q5'}, 'b': {'q3'}, 'c': {'q3'}},
-#           })
 A_r = NFA(
     states = {'q0','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11'},
     initial_state='q0',
@@ -47,18 +34,3 @@ A_r = NFA(
         'q11': {}, # accept state
     }
 )
-if __name__ == "__main__":
-	test = ['', 'cb']
-	accepted = []
-	rejected = []
-	for i in range(0,10):
-		test.append('aa'*i)
-
-	for word in test:
-		if A_r.accepts_input(word):
-			accepted.append(word)
-		else:
-			rejected.append(word)
-
-	print(accepted)
-	print(rejected)
