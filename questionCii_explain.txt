@@ -1,0 +1,13 @@
+The function nfa_pumped constructs a new NFA B, by copying the structure (states, initial_state,final_states and input symbols) of the input NFA A.
+NFA B contains transitions that have been modified from NFA A, it does this by:
+1. Iterating through every state in the NFA A.
+2. For each state, it creates a mutable copy of the existing transitions (existing_state_transition) to ensure the original NFA remains unchanged.
+3. If a state does not have a '0' transition, it adds an empty '0': {} transition.
+4. It adds a self loop transition for each state for the read symbol '0'.
+5. Using the modified transitions, it creates an NFA B.
+
+NFA B is guaranteed to accept the language Lpumped because the newly added self-loops allow the automaton to remain in its current state
+while reading any number of 0s. The NFA essentially pauses its progress through the original word while consuming these extra zeros.
+Since NFA B is non-deterministic, one branch can assume that '0' is an inserted symbol (self-loop at each state),
+while another branch can assume it is part of the original word w (taking the original transition).
+
