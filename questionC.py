@@ -47,33 +47,36 @@ def nfa_shuffle(A: NFA, B: NFA) -> NFA:
 		for b_state in B.states:
 
 			new_state = f"{a_state}a{b_state}b"
-			c_states.add(new_state)
+			c_states.add(new_state) # adds states for NFA C
 
+			# adds final states for NFA C
 			if a_state in A.final_states and b_state in B.final_states:
 				c_final_states.add(new_state)
 
 			c_transitions[new_state] = {}
 
-			symbol_list = list(c_input_symbols) + ['']
+			symbol_list = list(c_input_symbols) + [''] # Converts symbols into a list and add adds '' - epsilon
 
 			for symbol in symbol_list:
 				next_states = set()
 
+				# Adds transition from a_state to the next_a state given a symbol
 				if a_state in A.transitions and symbol in A.transitions[a_state]:
 					for next_a in A.transitions[a_state][symbol]:
-						next_state = f"{next_a}a{b_state}b"
+						next_state = f"{next_a}a{b_state}b" # change a, keep b
 						next_states.add(next_state)
 
+				# Adds transition from b_state to the next_b state given a symbol
 				if b_state in B.transitions and symbol in B.transitions[b_state]:
 					for next_b in B.transitions[b_state][symbol]:
-						next_state = f"{a_state}a{next_b}b"
+						next_state = f"{a_state}a{next_b}b" # keep a, change b
 						next_states.add(next_state)
 
 				if next_states:
 					c_transitions[new_state][symbol] = next_states
 
 
-	# 4. Construct the NFA
+	# Construct the NFA
 	C = NFA(
 		states=c_states,
 		initial_state=f"{A.initial_state}a{B.initial_state}b",
@@ -119,7 +122,7 @@ if __name__ == '__main__':
 	initial State: {C.initial_state},
 	final States: {C.final_states},
 	input Symbols: {C.input_symbols},
-	transitions: {C.transitions} 
+	transitions: {C.transitions}
 	"""
 	print(nfa_c)
 
@@ -140,13 +143,7 @@ if __name__ == '__main__':
 								for s8 in symbols:
 									for s9 in symbols:
 										for s10 in symbols:
-											for s11 in symbols:
-												for s12 in symbols:
-													for s13 in symbols:
-														for s14 in symbols:
-															for s15 in symbols:
-																for s16 in symbols:
-																	test.append(f"{s1}{s2}{s3}{s4}{s5}{s6}{s7}{s8}{s9}{s10}{s11}{s12}{s13}{s14}{s15}{s16}")
+											test.append(f"{s1}{s2}{s3}{s4}{s5}{s6}{s7}{s8}{s9}{s10}")
 
 	# Keep s if A accepts OR B accepts
 	for word in test:
@@ -164,7 +161,7 @@ if __name__ == '__main__':
 	# Let's test just the first 100 combinations to save time/memory
 	# (Checking ALL combinations of valid strings might be huge)
 	count = 0
-	limit = 1000000000
+	limit = 10000
 
 	for a in accepted_a:
 		for b in accepted_b:

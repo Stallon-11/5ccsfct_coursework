@@ -1,0 +1,19 @@
+The function nfa_shuffle constructs a new NFA C, by combining the structures of two input NFAs, A and B.
+NFA C is constructed as follows:
+1.  A nested for loop iterates through every state in NFA A and every state in NFA B.
+2.  For every pair of states, it creates a new combined state using the cartesian product of states in NFA A and B.
+3.  If the current state from A and the current state from B are final states, it marks the new combined state as a final state for NFA C.
+4.  It iterates through a combined list of input symbols (including epsilon) to generate transitions.
+5.  For each symbol, it adds transitions where either NFA A moves (while B stays current) or NFA B moves (while A stays current).
+6.  It then independently checks if NFA B can make a transition on the same symbol.
+    If it can, it adds a next_state consisting of the current (unchanged) state of A paired with the new state of B.
+7.  It combines all valid destination states found in the previous two steps into a single set of next_states for that symbol.
+8.  Finally, it assigns this set to the transitions dictionary for the current state c_transitions[new_state][symbol],
+    effectively allowing the NFA to non-deterministically choose which machine advances.
+9.  Using these combined states and transitions, it creates and returns NFA C.
+
+NFA C is guaranteed to accept the language Language(A)⋈Language(B) because this transition logic creates a non-deterministic simulation
+of both machines A and B running in parallel. This allows the NFA to choose which machine consumes the current input symbol.
+Essentially, the NFA "guesses" at each step whether the character belongs to the string from A or the string from B.
+Acceptance is only granted if the machine reaches a state where both underlying simulations have reached their respective final states,
+ensuring the input is a valid interleaving of two complete words.
